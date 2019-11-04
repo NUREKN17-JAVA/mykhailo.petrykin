@@ -17,8 +17,8 @@ public class HsqldbUserDao implements Dao<User> {
 	private static final String SELECT_ALL_QUERY = "SELECT * FROM users";
 	private static final String CALL_IDENTITY = "call IDENTITY()";
 	private static final String INSERT_QUERY = "INSERT INTO users (firstname,lastname,dateofbirth) VALUES (?,?,?)";
-	private static final String UPDATE_QUERY = "UPDATE users SET firstname = ?, lastname = ?, dateofbirth = ? WHERE id = ?;";
-	private static final String DELETE_QUERY = "DELETE FROM users WHERE id = ?;";
+	private static final String UPDATE_QUERY = "UPDATE users SET firstname = ?, lastname = ?, dateofbirth = ? WHERE id = ?";
+	private static final String DELETE_QUERY = "DELETE FROM users WHERE id = ?";
 	private static final String SELECT_QUERY = "SELECT * FROM users WHERE id = ?";
 	ConnectionFactory connectionFactory;
 	
@@ -74,23 +74,20 @@ public class HsqldbUserDao implements Dao<User> {
 	
 			preparedStatement.close();
 			connection.close();
-			
 		} catch (SQLException e) {
 			throw new DatabaseException(e);
 		}
-
 	}
 
 	@Override
 	public void delete(User entity) throws DatabaseException {
 		Connection connection = connectionFactory.createConnection();
-		PreparedStatement preparedStatement;
 		try {
-			preparedStatement = connection.prepareStatement(DELETE_QUERY);
+			PreparedStatement preparedStatement = connection.prepareStatement(DELETE_QUERY);
 			preparedStatement.setLong(1,entity.getId());
+			
 			preparedStatement.close();
 			connection.close();
-		
 		}
 		catch (SQLException e){
 			throw new DatabaseException(e);
