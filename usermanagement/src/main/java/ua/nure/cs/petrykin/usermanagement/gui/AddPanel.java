@@ -1,11 +1,14 @@
 package ua.nure.cs.petrykin.usermanagement.gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class AddPanel extends JPanel implements ActionListener {
 	
@@ -14,6 +17,9 @@ public class AddPanel extends JPanel implements ActionListener {
 	private JPanel fieldPanel;
 	private JButton cancelButton;
 	private JButton okButton;
+	private JTextField dayOfBirthField;
+	private JTextField lastNameField;
+	private JTextField firstNameField;
 	
 	public AddPanel(MainFrame parent) {
 		this.parent = parent;
@@ -56,7 +62,45 @@ public class AddPanel extends JPanel implements ActionListener {
 	}
 
 	private JPanel getFieldPanel() {
+		if(fieldPanel==null) {
+			fieldPanel=new JPanel();
+			fieldPanel.setLayout(new GridLayout(3,2));
+			addLabeledField(fieldPanel,"Имя",getFirstNameField());
+			addLabeledField(fieldPanel,"Фамилия",getLastNameField());
+			addLabeledField(fieldPanel,"Дата рождения",getDayOfBirthField());
+		}
 		return fieldPanel;
+	}
+
+	private JTextField getDayOfBirthField() {
+		if(dayOfBirthField == null) {
+			dayOfBirthField = new JTextField();
+			dayOfBirthField.setName("dayOfBirthField");
+		}
+		return dayOfBirthField;
+	}
+
+	private JTextField getLastNameField() {
+		if(lastNameField == null) {
+			lastNameField = new JTextField();
+			lastNameField.setName("lastNameField");
+		}
+		return lastNameField;
+	}
+
+	private void addLabeledField(JPanel panel, String labelText, JTextField textField) {
+		JLabel label = new JLabel(labelText);
+		label.setLabelFor(textField);
+		panel.add(label);
+		panel.add(textField);
+	}
+
+	private JTextField getFirstNameField() {
+		if(firstNameField == null) {
+			firstNameField = new JTextField();
+			firstNameField.setName("firstNameField");
+		}
+		return firstNameField;
 	}
 
 	@Override
