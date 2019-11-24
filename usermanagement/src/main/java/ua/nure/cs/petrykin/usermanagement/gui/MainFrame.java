@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import ua.nure.cs.petrykin.usermanagement.db.DaoFactory;
 import ua.nure.cs.petrykin.usermanagement.domain.User;
+import ua.nure.cs.petrykin.usermanagement.util.Messages;
 import ua.nure.cs.petrykin.usermanagement.db.Dao;
 
 public class MainFrame extends JFrame {
@@ -27,7 +28,7 @@ public class MainFrame extends JFrame {
 	private void initialize() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-		this.setTitle("User Manager");
+		this.setTitle(Messages.getString("MainFrame.user_management")); //$NON-NLS-1$
 		this.setContentPane(getContentPanel());
 	}
 	
@@ -45,7 +46,7 @@ public class MainFrame extends JFrame {
 
 	private AddPanel getAddPanel() {
 		if(addPanel == null) {
-			addPanel = new AddPanel();
+			addPanel = new AddPanel(this);
 		}
 		return addPanel;
 	}//done

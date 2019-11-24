@@ -12,11 +12,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.Border;
 
+import ua.nure.cs.petrykin.usermanagement.util.Messages;
+
 public class BrowsePanel extends JPanel implements ActionListener {
 
-	private static final String ADD_COMMAND = "add";
-	private static final String EDIT_COMMAND = "edit";
-	private static final String DELETE_COMMAND = "delete";
+	private static final String ADD_COMMAND = "add"; //$NON-NLS-1$
+	private static final String EDIT_COMMAND = "edit"; //$NON-NLS-1$
+	private static final String DELETE_COMMAND = "delete"; //$NON-NLS-1$
 	private MainFrame parent;
 	private JScrollPane tablePanel;
 	private JTable userTable;
@@ -26,10 +28,10 @@ public class BrowsePanel extends JPanel implements ActionListener {
 	private JButton deleteButton;
 	private JButton detailsButton;
 	
-	private static final String DELETE_BUTTON_COMPONENT_NAME = "deleteButton";
-	private static final String DETAILS_BUTTON_COMPONENT_NAME = "detailsButton";
-	private static final String EDIT_BUTTON_COMPONENT_NAME = "editButton";
-	private static final String ADD_BUTTON_COMPONENT_NAME = "addButton";
+	private static final String DELETE_BUTTON_COMPONENT_NAME = "deleteButton"; //$NON-NLS-1$
+	private static final String DETAILS_BUTTON_COMPONENT_NAME = "detailsButton"; //$NON-NLS-1$
+	private static final String EDIT_BUTTON_COMPONENT_NAME = "editButton"; //$NON-NLS-1$
+	private static final String ADD_BUTTON_COMPONENT_NAME = "addButton"; //$NON-NLS-1$
 
 	public BrowsePanel(MainFrame mainFrame) {
 		parent = mainFrame;
@@ -37,7 +39,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 	}//done
 
 	private void initialize() {
-		this.setName("browsePanel");// non-localized(No need to do localization)
+		this.setName("browsePanel");// non-localized(No need to do localization) //$NON-NLS-1$
 		this.setLayout(new BorderLayout());
 		this.add(getTablePanel(), BorderLayout.CENTER);
 		this.add(getButtonsPanel(), BorderLayout.SOUTH);
@@ -58,7 +60,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 	private JButton getAddButton() {
 		if(addButton == null) {
 			addButton = new JButton();
-			addButton.setText("Add");//has to be localized
+			addButton.setText(Messages.getString("BrowsePanel.add"));//has to be localized //$NON-NLS-1$
 			addButton.setName(ADD_BUTTON_COMPONENT_NAME);
 			addButton.setActionCommand(ADD_COMMAND);//non-localize
 			addButton.addActionListener(this);
@@ -70,9 +72,9 @@ public class BrowsePanel extends JPanel implements ActionListener {
 	private JButton getEditButton() {
 		if(editButton == null) {
 			editButton = new JButton();
-			editButton.setText("Edit");//has to be localized
+			editButton.setText(Messages.getString("BrowsePanel.edit"));//has to be localized //$NON-NLS-1$
 			editButton.setName(EDIT_BUTTON_COMPONENT_NAME);
-			editButton.setActionCommand("edit");//non-localize
+			editButton.setActionCommand(EDIT_COMMAND);//non-localize
 			editButton.addActionListener(this);
 		}
 		return editButton;
@@ -82,9 +84,9 @@ public class BrowsePanel extends JPanel implements ActionListener {
 	private JButton getDeleteButton() {
 		if(deleteButton == null) {
 			deleteButton = new JButton();
-			deleteButton.setText("Delete");//has to be localized
+			deleteButton.setText(Messages.getString("BrowsePanel.delete"));//has to be localized //$NON-NLS-1$
 			deleteButton.setName(DELETE_BUTTON_COMPONENT_NAME);
-			deleteButton.setActionCommand("delete");//non-localize
+			deleteButton.setActionCommand(EDIT_COMMAND);//non-localize
 			deleteButton.addActionListener(this);
 		}
 		return deleteButton;
@@ -94,9 +96,9 @@ public class BrowsePanel extends JPanel implements ActionListener {
 	private JButton getDetailsButton() {
 		if(detailsButton == null) {
 			detailsButton = new JButton();
-			detailsButton.setText("Details");//has to be localized
+			detailsButton.setText(Messages.getString("BrowsePanel.details"));//has to be localized //$NON-NLS-1$
 			detailsButton.setName(DETAILS_BUTTON_COMPONENT_NAME);
-			detailsButton.setActionCommand("details");//non-localize
+			detailsButton.setActionCommand("details");//non-localize //$NON-NLS-1$
 			detailsButton.addActionListener(this);
 		}
 		return detailsButton;
@@ -115,7 +117,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 	private JTable getUserTable() {
 		if(userTable == null) {
 			userTable = new JTable();
-			userTable.setName("userTable"); //non-localize
+			userTable.setName("userTable"); //non-localize //$NON-NLS-1$
 		}
 		return userTable;
 	}//done

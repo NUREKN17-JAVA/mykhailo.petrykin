@@ -85,8 +85,8 @@ public class MainFrameTest extends JFCTestCase {
 		
 		JButton okButton =(JButton) find(JButton.class, OK_BUTTON_COMPONENT_NAME);
 		getHelper().enterClickAndLeave(new MouseEventData(this, okButton));
-		
-		find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
+
+//		find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
 		
 	}
 
