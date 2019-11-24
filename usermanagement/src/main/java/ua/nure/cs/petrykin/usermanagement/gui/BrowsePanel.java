@@ -34,14 +34,14 @@ public class BrowsePanel extends JPanel implements ActionListener {
 	public BrowsePanel(MainFrame mainFrame) {
 		parent = mainFrame;
 		initialize();
-	}
+	}//done
 
 	private void initialize() {
 		this.setName("browsePanel");// non-localized(No need to do localization)
 		this.setLayout(new BorderLayout());
 		this.add(getTablePanel(), BorderLayout.CENTER);
 		this.add(getButtonsPanel(), BorderLayout.SOUTH);
-	}
+	}//done
 
 	private JPanel getButtonsPanel() {
 		if(buttonPanel == null) {
@@ -53,7 +53,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 
 		}
 		return buttonPanel;
-	}
+	} //done
 
 	private JButton getAddButton() {
 		if(addButton == null) {
@@ -64,7 +64,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			addButton.addActionListener(this);
 		}
 		return addButton;
-	}
+	}//done
 
 	
 	private JButton getEditButton() {
@@ -76,7 +76,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			editButton.addActionListener(this);
 		}
 		return editButton;
-	}
+	}//done
 	
 	
 	private JButton getDeleteButton() {
@@ -88,7 +88,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			deleteButton.addActionListener(this);
 		}
 		return deleteButton;
-	}
+	}//done
 	
 	
 	private JButton getDetailsButton() {
@@ -100,7 +100,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			detailsButton.addActionListener(this);
 		}
 		return detailsButton;
-	}
+	}//done
 
 	
 	
@@ -110,7 +110,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			//tablePanel.setName("userTable"); //non-localize
 		}
 		return tablePanel;
-	}
+	}//done
 
 	private JTable getUserTable() {
 		if(userTable == null) {
@@ -118,7 +118,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 			userTable.setName("userTable"); //non-localize
 		}
 		return userTable;
-	}
+	}//done
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
