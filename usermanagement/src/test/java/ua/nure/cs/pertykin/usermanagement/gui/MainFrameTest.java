@@ -2,6 +2,7 @@ package ua.nure.cs.pertykin.usermanagement.gui;
 
 import java.awt.Component;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
@@ -9,6 +10,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import com.mockobjects.dynamic.Mock;
+
 import javax.swing.Box.Filler;
 
 import junit.extensions.jfcunit.JFCTestCase;
@@ -19,7 +23,9 @@ import junit.extensions.jfcunit.eventdata.StringEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
 import ua.nure.cs.petrykin.usermanagement.db.DaoFactory;
 import ua.nure.cs.petrykin.usermanagement.db.DaoFactoryImpl;
+import ua.nure.cs.petrykin.usermanagement.db.MockDaoFactory;
 import ua.nure.cs.petrykin.usermanagement.db.MockUserDao;
+import ua.nure.cs.petrykin.usermanagement.domain.User;
 import ua.nure.cs.petrykin.usermanagement.gui.MainFrame;
 
 public class MainFrameTest extends JFCTestCase {
@@ -40,31 +46,37 @@ public class MainFrameTest extends JFCTestCase {
 	private static final String ADD_BUTTON_COMPONENT_NAME = "addButton";
 	private static final int NUMBER_OF_COLUMNS_IN_USER_TABLE = 3;
 	private MainFrame mainFrame;
-
+	private Mock mockUserDao;
 	@Override
 	protected void setUp() throws Exception {
 		// TODO Auto-generated method stub
 		super.setUp();
-		Properties properties = new Properties();
-		properties.setProperty("dao.factory",MockUserDao.class.getName());
-		properties.setProperty("dao.factory", DaoFactoryImpl.class.getName());
-		DaoFactory.getInstance().init(properties);
-		setHelper(new JFCTestHelper());
 		try {
-			mainFrame = new MainFrame();
+		Properties properties = new Properties();
+
+		properties.setProperty("dao.factory", MockDaoFactory.class.getName());
+		DaoFactory.getInstance().init(properties);
+		mockUserDao =((MockDaoFactory) DaoFactory.getInstance()).getMockUserDao();
+		mockUserDao.expectAndReturn("findAll", new ArrayList());
+		setHelper(new JFCTestHelper());
+		mainFrame = new MainFrame();
 		}catch(Exception e) {
-		mainFrame.setVisible(true);
+			e.printStackTrace();
 		}
 		mainFrame.setVisible(true);
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
-		mainFrame.setVisible(false);
-		getHelper();
-		TestHelper.cleanUp(this);
-		super.tearDown();
-		
+		try {
+				mockUserDao.verify();
+				mainFrame.setVisible(false);
+				getHelper();
+				TestHelper.cleanUp(this);
+				super.tearDown();
+		} catch (Exception e){
+			e.printStackTrace();
+			}
 	}
 	
 	private Component find(Class<?> componentClass, String name) {
@@ -92,6 +104,14 @@ public class MainFrameTest extends JFCTestCase {
 
 	public void testAddUser() {
 		JButton addButton = (JButton) find(JButton.class, ADD_BUTTON_COMPONENT_NAME);
+		User user = new User(FIRST_NAME,LAST_NAME,DATE_OF_BIRTH);
+		User expectedUser = new User(new Long(1),FIRST_NAME,LAST_NAME,DATE_OF_BIRTH);
+		mockUserDao.expectAndReturn("create",user,expectedUser);
+		
+		ArrayList users = new ArrayList();
+		users.add(expectedUser);
+		mockUserDao.expectAndReturn("findAll",users);
+		
 		JTable table = (JTable) find(JTable.class,TABLE_COMPONENT_NAME);
 		assertEquals(0,table.getRowCount());
 		getHelper().enterClickAndLeave(new MouseEventData(this, addButton));
