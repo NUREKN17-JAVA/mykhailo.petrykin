@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -118,6 +119,8 @@ public class BrowsePanel extends JPanel implements ActionListener {
 		if(userTable == null) {
 			userTable = new JTable();
 			userTable.setName("userTable"); //non-localize //$NON-NLS-1$
+			UserTableModel model= new UserTableModel(new ArrayList());
+			userTable.setModel(model);
 		}
 		return userTable;
 	}//done

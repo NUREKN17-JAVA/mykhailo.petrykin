@@ -19,12 +19,12 @@ import junit.extensions.jfcunit.finder.NamedComponentFinder;
 import ua.nure.cs.petrykin.usermanagement.gui.MainFrame;
 
 public class MainFrameTest extends JFCTestCase {
+	private static final Date DATE_OF_BIRTH = new Date();
 	private static final String DATE_OF_BIRTH_FIELD_COMPONENT_NAME = "dateOfBirthField";
 	private static final String LAST_NAME_FIELD_COMPONENT_NAME = "lastNameField";
 	private static final String FIRST_NAME_FIELD_COMPONENT_NAME = "firstNameField";
 	private static final String BROWSE_PANEL_COMPONENT_NAME = "browsePanel";
 	private static final String OK_BUTTON_COMPONENT_NAME = "okButton";
-	private static final Date DATE_OF_BIRTH = new Date();
 	private static final String LAST_NAME = "Doe";
 	private static final String FIRST_NAME = "John";
 	private static final String ADD_PANEL_COMPONENT_NAME = "addPanel";
@@ -62,32 +62,32 @@ public class MainFrameTest extends JFCTestCase {
 		return component;
 	}
 	
-	public void testBrowsePanel() {
+	public void testBrowseTablePanel() {
 		JTable table = (JTable) find(JTable.class, "userTable");
 		find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
-		//assertEquals(NUMBER_OF_COLUMNS_IN_USER_TABLE, table.getColumnCount());
-		//assertEquals("ID", table.getColumnName(0));
-		//assertEquals("First Name", table.getColumnName(1));
-		//assertEquals("Last Name", table.getColumnName(2));
+		assertEquals(NUMBER_OF_COLUMNS_IN_USER_TABLE, table.getColumnCount());
+		assertEquals("ID", table.getColumnName(0));
+		assertEquals("Имя", table.getColumnName(1));
+		assertEquals("Фамилия", table.getColumnName(2));
 		find(JButton.class, ADD_BUTTON_COMPONENT_NAME);
 		find(JButton.class, EDIT_BUTTON_COMPONENT_NAME);
 		find(JButton.class, DETAILS_BUTTON_COMPONENT_NAME);
 		find(JButton.class, DELETE_BUTTON_COMPONENT_NAME);
-
+		find(JTable.class,"userTable");
 	}
-	
+
 	public void testAddUser() {
 		JButton addButton = (JButton) find(JButton.class, ADD_BUTTON_COMPONENT_NAME);
+		JTable table = (JTable) find(JTable.class,"userTable");
+		assertEquals(0,table.getRowCount());
 		getHelper().enterClickAndLeave(new MouseEventData(this, addButton));
-		
-		find(JPanel.class, ADD_PANEL_COMPONENT_NAME);
-		fillFields(FIRST_NAME, LAST_NAME, DATE_OF_BIRTH);
-		
-		JButton okButton =(JButton) find(JButton.class, OK_BUTTON_COMPONENT_NAME);
-		getHelper().enterClickAndLeave(new MouseEventData(this, okButton));
-
-//		find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
-		
+		find(JPanel.class,"addPanel");
+		JButton okButton = (JButton) find(JButton.class,"okButton");
+		find(JButton.class,"cancelButton");
+		fillFields(FIRST_NAME,LAST_NAME,DATE_OF_BIRTH);
+		getHelper().enterClickAndLeave(new MouseEventData(this,okButton));
+		table = (JTable) find(JTable.class,"userTable");
+		assertEquals(1,table.getRowCount());
 	}
 
 	private void fillFields(String firstName, String lastName, Date dateOfBirth) {
