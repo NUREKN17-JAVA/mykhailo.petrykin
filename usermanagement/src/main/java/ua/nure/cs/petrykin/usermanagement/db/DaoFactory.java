@@ -41,8 +41,8 @@ public abstract class DaoFactory {
 		return instance;
 	}
 	
-	public void init(Properties properties) {
-		this.properties = properties;
+	public static void init(Properties properties) {
+		properties = properties;
 	}
 	protected ConnectionFactory getConnectionFactory() {
 		return new ConnectionFactoryImpl(properties);

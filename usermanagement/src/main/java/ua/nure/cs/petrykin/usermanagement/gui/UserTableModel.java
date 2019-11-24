@@ -12,10 +12,10 @@ import ua.nure.cs.petrykin.usermanagement.domain.User;
 public class UserTableModel extends AbstractTableModel {
 	private static final String[] COLUMN_NAMES = {"ID","Имя","Фамилия"};
 	private static final Class[] COLUMN_CLASSES= {Long.class,String.class,String.class};
-	private List users = null;
+	private List<User> users = null;
 	
-	public UserTableModel(Collection users) {
-		this.users = new ArrayList(users);
+	public UserTableModel(Collection<User> users) {
+		this.users = new ArrayList<>(users);
 	}
 	@Override
 	public int getColumnCount() {
@@ -26,7 +26,7 @@ public class UserTableModel extends AbstractTableModel {
 	public int getRowCount() {
 		return users.size();
 	}
-	public Class getColumnClass(int column) {
+	public Class<?> getColumnClass(int column) {
 		return COLUMN_CLASSES[column];
 	}
 	
@@ -46,5 +46,13 @@ public class UserTableModel extends AbstractTableModel {
 		}
 		return null;
 	}
-
+	public User getUser(int index) {
+		return(User) users.get(index);
+	}
+	public void addUsers(Collection<User> users) {
+		this.users.addAll(users);
+	}
+	public void clearUsers() {
+		this.users = new ArrayList<>();
+	}
 }

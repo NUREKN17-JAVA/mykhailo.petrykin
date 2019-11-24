@@ -17,9 +17,10 @@ public class MainFrame extends JFrame {
 	private static final int FRAME_HEIGHT = 600;
 	private static final int FRAME_WIDTH = 800;
 	private JPanel contentPanel;
-	private BrowsePanel browsePanel;
+//	private BrowsePanel browsePanel;
+	private JPanel browsePanel;
 	private AddPanel addPanel;
-	private Dao dao;
+	private Dao<User> dao;
 	
 	public MainFrame() {
 		super();
@@ -27,7 +28,7 @@ public class MainFrame extends JFrame {
 		initialize();
 	}
 	
-	public Dao getDao() {
+	public Dao<User> getDao() {
 		return dao;
 	}
 	
@@ -46,7 +47,7 @@ public class MainFrame extends JFrame {
 		}
 		return contentPanel;
 	}
-	private BrowsePanel getBrowsePanel() {
+	private JPanel getBrowsePanel() {
 		if(browsePanel == null) {
 			browsePanel = new BrowsePanel(this);
 		}

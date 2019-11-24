@@ -18,9 +18,11 @@ import ua.nure.cs.petrykin.usermanagement.util.Messages;
 
 public class BrowsePanel extends JPanel implements ActionListener {
 
+	private static final String BROWSE_PANEL_EDIT = "BrowsePanel.edit";
 	private static final String ADD_COMMAND = "add"; //$NON-NLS-1$
 	private static final String EDIT_COMMAND = "edit"; //$NON-NLS-1$
 	private static final String DELETE_COMMAND = "delete"; //$NON-NLS-1$
+	private static final String DETAILS_COMMAND = "delete"; //$NON-NLS-1$
 	private MainFrame parent;
 	private JScrollPane tablePanel;
 	private JTable userTable;
@@ -74,7 +76,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
 	private JButton getEditButton() {
 		if(editButton == null) {
 			editButton = new JButton();
-			editButton.setText(Messages.getString("BrowsePanel.edit"));//has to be localized //$NON-NLS-1$
+			editButton.setText(Messages.getString(BROWSE_PANEL_EDIT));//has to be localized //$NON-NLS-1$
 			editButton.setName(EDIT_BUTTON_COMPONENT_NAME);
 			editButton.setActionCommand(EDIT_COMMAND);//non-localize
 			editButton.addActionListener(this);
@@ -130,50 +132,31 @@ public class BrowsePanel extends JPanel implements ActionListener {
 		try {
 			model = new UserTableModel(parent.getDao().findAll());
 		} catch (DatabaseException e) {
-			model = new UserTableModel(new ArrayList());
+			model = new UserTableModel(new ArrayList<>());
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", 
 					JOptionPane.ERROR_MESSAGE);
 		}
-		userTable.setModel(model);
+		getUserTable().setModel(model);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String acctionCommand = e.getActionCommand();
-		if(ADD_COMMAND.equalsIgnoreCase(acctionCommand)) {
+		String actionCommand = e.getActionCommand();
+		if(ADD_COMMAND.equalsIgnoreCase(actionCommand)) {
 			this.setVisible(false);
 			parent.showAddPanel();
 		} 
-//		else if ("edit".equalsIgnoreCase(actionCommand)) { //$NON-NLS-1$
-//            int selectedRow = userTable.getSelectedRow();
-//            if (selectedRow == -1) {
-//                JOptionPane.showMessageDialog(this, "Select a user, please",
-//                        "Edit user", JOptionPane.INFORMATION_MESSAGE);
-//                return;
-//            }
-//            User user = ((UserTableModel) userTable.getModel())
-//                    .getUser(selectedRow);
-//            this.setVisible(false);
-//            parent.showEditPanel(user);
-//        }
-//		else if (DELETE_COMMAND.equalsIgnoreCase(actionCommand)) { //$NON-NLS-1$
-//            int selectedRow = userTable.getSelectedRow();
-//            if (selectedRow == -1) {
-//                JOptionPane.showMessageDialog(this, "Select a user, please",
-//                        "Edit user", JOptionPane.INFORMATION_MESSAGE);
-//                return;
-//            }
-//            try {
-//                parent.getUserDao().delete(
-//                        ((UserTableModel) userTable.getModel())
-//                                .getUser(selectedRow));
-//            } catch (DatabaseException e1) {
-//                JOptionPane.showMessageDialog(this, e1.getMessage(), "Error",
-//                        JOptionPane.ERROR_MESSAGE);
-//            }
-//            initTable();
-//            return;
-//        }
-		
+//		else if(EDIT_COMMAND.equalsIgnoreCase(actionCommand)) {
+//			this.setVisible(false);
+//			parent.showEditPanel();
+//		}
+//		else if(DETAILS_COMMAND.equalsIgnoreCase(actionCommand)) {
+//			this.setVisible(false);
+//			parent.showDetailsPanel();
+//		}
+//		else if(DELETE_COMMAND.equalsIgnoreCase(actionCommand)) {
+//			this.setVisible(false);
+//			parent.showDeletePanel();
+//		}
 	}
 }

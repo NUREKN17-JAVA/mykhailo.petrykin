@@ -17,7 +17,7 @@ public class MockDaoFactory extends DaoFactory {
 	@Override
 	public Dao<User> getUserDao() {
 		// TODO Auto-generated method stub
-		return null;
+		return (Dao<User>) mockUserDao.proxy();
 	}
 
 }
