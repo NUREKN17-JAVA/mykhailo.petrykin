@@ -16,6 +16,7 @@ import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.eventdata.StringEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
+import ua.nure.cs.petrykin.usermanagement.gui.MainFrame;
 
 public class MainFrameTest extends JFCTestCase {
 	private static final String DATE_OF_BIRTH_FIELD_COMPONENT_NAME = "dateOfBirthField";
@@ -62,8 +63,8 @@ public class MainFrameTest extends JFCTestCase {
 	}
 	
 	public void testBrowsePanel() {
-		find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
 		JTable table = (JTable) find(JTable.class, "userTable");
+		find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
 		//assertEquals(NUMBER_OF_COLUMNS_IN_USER_TABLE, table.getColumnCount());
 		//assertEquals("ID", table.getColumnName(0));
 		//assertEquals("First Name", table.getColumnName(1));

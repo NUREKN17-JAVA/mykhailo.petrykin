@@ -7,6 +7,10 @@ import java.awt.Container;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import ua.nure.cs.petrykin.usermanagement.db.DaoFactory;
+import ua.nure.cs.petrykin.usermanagement.domain.User;
+import ua.nure.cs.petrykin.usermanagement.db.Dao;
+
 public class MainFrame extends JFrame {
 	
 	private static final int FRAME_HEIGHT = 600;
@@ -17,6 +21,7 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() {
 		super();
+		dao = DaoFactory.getInstance().getUserDao();
 		initialize();
 	}
 
@@ -63,5 +68,17 @@ public class MainFrame extends JFrame {
 		}
 		return browsePanel;
 	}
+	public void showEditPanel(User user) {
+        getEditPanel().setUser(user);
+        showPanel(getEditPanel());
+        
+    }
 
+
+    private EditPanel getEditPanel() {
+        if (editPanel == null) {
+            editPanel = new EditPanel(this);
+        }
+        return editPanel;
+    }
 }

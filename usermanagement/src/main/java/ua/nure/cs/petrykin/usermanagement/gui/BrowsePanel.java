@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -14,6 +15,8 @@ import javax.swing.border.Border;
 public class BrowsePanel extends JPanel implements ActionListener {
 
 	private static final String ADD_COMMAND = "add";
+	private static final String EDIT_COMMAND = "edit";
+	private static final String DELETE_COMMAND = "delete";
 	private MainFrame parent;
 	private JScrollPane tablePanel;
 	private JTable userTable;
@@ -123,6 +126,37 @@ public class BrowsePanel extends JPanel implements ActionListener {
 		if(ADD_COMMAND.equalsIgnoreCase(acctionCommand)) {
 			this.setVisible(false);
 			parent.showAddPanel();
-		} ///else if(EDIT_COMMANd)...
+		} 
+		else if ("edit".equalsIgnoreCase(actionCommand)) { //$NON-NLS-1$
+            int selectedRow = userTable.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Select a user, please",
+                        "Edit user", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            User user = ((UserTableModel) userTable.getModel())
+                    .getUser(selectedRow);
+            this.setVisible(false);
+            parent.showEditPanel(user);
+        }
+		else if (DELETE_COMMAND.equalsIgnoreCase(actionCommand)) { //$NON-NLS-1$
+            int selectedRow = userTable.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Select a user, please",
+                        "Edit user", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            try {
+                parent.getUserDao().delete(
+                        ((UserTableModel) userTable.getModel())
+                                .getUser(selectedRow));
+            } catch (DatabaseException e1) {
+                JOptionPane.showMessageDialog(this, e1.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+            initTable();
+            return;
+        }
+		
 	}
 }
