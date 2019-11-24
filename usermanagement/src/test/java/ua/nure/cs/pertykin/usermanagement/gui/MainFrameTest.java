@@ -24,12 +24,14 @@ public class MainFrameTest extends JFCTestCase {
 	private static final String LAST_NAME_FIELD_COMPONENT_NAME = "lastNameField";
 	private static final String FIRST_NAME_FIELD_COMPONENT_NAME = "firstNameField";
 	private static final String BROWSE_PANEL_COMPONENT_NAME = "browsePanel";
+	private static final String TABLE_COMPONENT_NAME = "userTable";
 	private static final String OK_BUTTON_COMPONENT_NAME = "okButton";
 	private static final String LAST_NAME = "Doe";
 	private static final String FIRST_NAME = "John";
 	private static final String ADD_PANEL_COMPONENT_NAME = "addPanel";
 	private static final String DELETE_BUTTON_COMPONENT_NAME = "deleteButton";
 	private static final String DETAILS_BUTTON_COMPONENT_NAME = "detailsButton";
+	private static final String CANCEL_BUTTON_COMPONENT_NAME = "cancelButton";
 	private static final String EDIT_BUTTON_COMPONENT_NAME = "editButton";
 	private static final String ADD_BUTTON_COMPONENT_NAME = "addButton";
 	private static final int NUMBER_OF_COLUMNS_IN_USER_TABLE = 3;
@@ -63,7 +65,7 @@ public class MainFrameTest extends JFCTestCase {
 	}
 	
 	public void testBrowseTablePanel() {
-		JTable table = (JTable) find(JTable.class, "userTable");
+		JTable table = (JTable) find(JTable.class, TABLE_COMPONENT_NAME);
 		find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
 		assertEquals(NUMBER_OF_COLUMNS_IN_USER_TABLE, table.getColumnCount());
 		assertEquals("ID", table.getColumnName(0));
@@ -73,20 +75,20 @@ public class MainFrameTest extends JFCTestCase {
 		find(JButton.class, EDIT_BUTTON_COMPONENT_NAME);
 		find(JButton.class, DETAILS_BUTTON_COMPONENT_NAME);
 		find(JButton.class, DELETE_BUTTON_COMPONENT_NAME);
-		find(JTable.class,"userTable");
+		find(JTable.class,TABLE_COMPONENT_NAME);
 	}
 
 	public void testAddUser() {
 		JButton addButton = (JButton) find(JButton.class, ADD_BUTTON_COMPONENT_NAME);
-		JTable table = (JTable) find(JTable.class,"userTable");
+		JTable table = (JTable) find(JTable.class,TABLE_COMPONENT_NAME);
 		assertEquals(0,table.getRowCount());
 		getHelper().enterClickAndLeave(new MouseEventData(this, addButton));
-		find(JPanel.class,"addPanel");
-		JButton okButton = (JButton) find(JButton.class,"okButton");
-		find(JButton.class,"cancelButton");
+		find(JPanel.class,ADD_PANEL_COMPONENT_NAME);
+		JButton okButton = (JButton) find(JButton.class,OK_BUTTON_COMPONENT_NAME);
+		find(JButton.class,CANCEL_BUTTON_COMPONENT_NAME);
 		fillFields(FIRST_NAME,LAST_NAME,DATE_OF_BIRTH);
 		getHelper().enterClickAndLeave(new MouseEventData(this,okButton));
-		table = (JTable) find(JTable.class,"userTable");
+		table = (JTable) find(JTable.class,TABLE_COMPONENT_NAME);
 		assertEquals(1,table.getRowCount());
 	}
 

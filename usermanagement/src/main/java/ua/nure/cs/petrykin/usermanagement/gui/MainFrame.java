@@ -32,25 +32,6 @@ public class MainFrame extends JFrame {
 		this.setContentPane(getContentPanel());
 	}
 	
-	
-	public void showAddPanel() {
-		showPanel(getAddPanel());
-	}//done
-	
-
-	private void showPanel(JPanel panel) {
-		getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setVisible(true);
-		panel.repaint();
-	}//done
-
-	private AddPanel getAddPanel() {
-		if(addPanel == null) {
-			addPanel = new AddPanel(this);
-		}
-		return addPanel;
-	}//done
-
 	private JPanel getContentPanel() {
 		if(contentPanel == null) {
 			contentPanel = new JPanel();
@@ -59,14 +40,34 @@ public class MainFrame extends JFrame {
 		}
 		return contentPanel;
 	}
-	
-
 	private BrowsePanel getBrowsePanel() {
 		if(browsePanel == null) {
 			browsePanel = new BrowsePanel(this);
 		}
 		return browsePanel;
 	}
+	public void showAddPanel() {
+		showPanel(getAddPanel());
+	}//done
+	
+	private AddPanel getAddPanel() {
+		if(addPanel == null) {
+			addPanel = new AddPanel(this);
+		}
+		return addPanel;
+	}//done
+	
+	public void showBrowsePanel() {
+        showPanel(getBrowsePanel());
+    }
+
+	private void showPanel(JPanel panel) {
+		getContentPane().add(panel, BorderLayout.CENTER);
+		panel.setVisible(true);
+		panel.repaint();
+	}//done
+
+	
 	public static void main(String[]args) {
 		MainFrame frame = new MainFrame();
 		frame.setVisible(true);
