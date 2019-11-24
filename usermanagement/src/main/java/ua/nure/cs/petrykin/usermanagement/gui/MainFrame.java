@@ -21,7 +21,6 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() {
 		super();
-		dao = DaoFactory.getInstance().getUserDao();
 		initialize();
 	}
 
@@ -56,7 +55,7 @@ public class MainFrame extends JFrame {
 		if(contentPanel == null) {
 			contentPanel = new JPanel();
 			contentPanel.setLayout(new BorderLayout());
-			contentPanel.add(getBrowsePanel());
+			contentPanel.add(getBrowsePanel(), BorderLayout.CENTER);
 		}
 		return contentPanel;
 	}
@@ -68,17 +67,8 @@ public class MainFrame extends JFrame {
 		}
 		return browsePanel;
 	}
-	public void showEditPanel(User user) {
-        getEditPanel().setUser(user);
-        showPanel(getEditPanel());
-        
-    }
-
-
-    private EditPanel getEditPanel() {
-        if (editPanel == null) {
-            editPanel = new EditPanel(this);
-        }
-        return editPanel;
-    }
+	public static void main(String[]args) {
+		MainFrame frame = new MainFrame();
+		frame.setVisible(true);
+	}
 }
