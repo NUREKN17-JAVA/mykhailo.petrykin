@@ -19,12 +19,18 @@ public class MainFrame extends JFrame {
 	private JPanel contentPanel;
 	private BrowsePanel browsePanel;
 	private AddPanel addPanel;
+	private Dao dao;
 	
 	public MainFrame() {
 		super();
+		dao = DaoFactory.getInstance().getUserDao();
 		initialize();
 	}
-
+	
+	public Dao getDao() {
+		return dao;
+	}
+	
 	private void initialize() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -44,8 +50,10 @@ public class MainFrame extends JFrame {
 		if(browsePanel == null) {
 			browsePanel = new BrowsePanel(this);
 		}
+		((BrowsePanel)browsePanel).initTable();
 		return browsePanel;
 	}
+	
 	public void showAddPanel() {
 		showPanel(getAddPanel());
 	}//done

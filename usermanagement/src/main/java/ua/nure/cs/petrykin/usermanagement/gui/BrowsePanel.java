@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.Border;
 
+import ua.nure.cs.petrykin.usermanagement.db.DatabaseException;
 import ua.nure.cs.petrykin.usermanagement.util.Messages;
 
 public class BrowsePanel extends JPanel implements ActionListener {
@@ -119,11 +120,22 @@ public class BrowsePanel extends JPanel implements ActionListener {
 		if(userTable == null) {
 			userTable = new JTable();
 			userTable.setName("userTable"); //non-localize //$NON-NLS-1$
-			UserTableModel model= new UserTableModel(new ArrayList());
-			userTable.setModel(model);
 		}
+		initTable();
 		return userTable;
 	}//done
+
+	public void initTable() {
+		UserTableModel model;
+		try {
+			model = new UserTableModel(parent.getDao().findAll());
+		} catch (DatabaseException e) {
+			model = new UserTableModel(new ArrayList());
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error", 
+					JOptionPane.ERROR_MESSAGE);
+		}
+		userTable.setModel(model);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
