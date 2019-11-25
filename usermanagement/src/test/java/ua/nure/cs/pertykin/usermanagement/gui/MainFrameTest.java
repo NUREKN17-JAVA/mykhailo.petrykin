@@ -56,6 +56,7 @@ public class MainFrameTest extends JFCTestCase {
 	private static final String ADD_BUTTON_COMPONENT_NAME = "addButton";
 	private static final int NUMBER_OF_COLUMNS_IN_USER_TABLE = 3;
 	private static final int NUMBER_OF_ROWS_ADD_TEST = 2;
+	private static final int NUMBER_OF_ROWS_ADD_CANCEL_TEST = 1;
 	
 	private MainFrame mainFrame;
 	private Mock mockUserDao;
@@ -123,6 +124,7 @@ public class MainFrameTest extends JFCTestCase {
 	}
 	
 	public void testAddUser() {
+		
 		User user = new User(FIRST_NAME,LAST_NAME,DATE_OF_BIRTH);
 		User expectedUser = new User(new Long(1),FIRST_NAME,LAST_NAME,DATE_OF_BIRTH);
 		mockUserDao.expectAndReturn("create", user, expectedUser);
@@ -130,18 +132,46 @@ public class MainFrameTest extends JFCTestCase {
 		users.add(expectedUser);
 		mockUserDao.expectAndReturn("findAll",users);
 		JTable table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
+		assertEquals(0,table.getRowCount());
+		
 		JButton addButton = (JButton) find(JButton.class, ADD_BUTTON_COMPONENT_NAME);
 		getHelper().enterClickAndLeave(new MouseEventData(this,addButton));
 		find(JPanel.class, ADD_PANEL_COMPONENT_NAME);
 		fillFields(FIRST_NAME, LAST_NAME, DATE_OF_BIRTH);
+		
 		JButton okButton = (JButton) find(JButton.class,OK_BUTTON_COMPONENT_NAME);
+		
 		getHelper().enterClickAndLeave(new MouseEventData(this,okButton));
 		find(JPanel.class,BROWSE_PANEL_COMPONENT_NAME);
 		table = (JTable) find(JTable.class,USER_TABLE_COMPONENT_NAME);
 		assertEquals(NUMBER_OF_ROWS_ADD_TEST,table.getRowCount());
 	}
-	public void testEditUser() {
+	public void testCancelAddUser() {
 		
+		User user = new User(FIRST_NAME,LAST_NAME,DATE_OF_BIRTH);
+		User expectedUser = new User(new Long(1),FIRST_NAME,LAST_NAME,DATE_OF_BIRTH);
+		mockUserDao.expectAndReturn("create", user, expectedUser);
+		ArrayList<User> users = new ArrayList<User>(this.users);
+		users.add(expectedUser);
+		mockUserDao.expectAndReturn("findAll",users);
+		JTable table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
+		assertEquals(0,table.getRowCount());
+		
+		JButton addButton = (JButton) find(JButton.class, ADD_BUTTON_COMPONENT_NAME);
+		getHelper().enterClickAndLeave(new MouseEventData(this,addButton));
+		find(JPanel.class, ADD_PANEL_COMPONENT_NAME);
+		fillFields(FIRST_NAME, LAST_NAME, DATE_OF_BIRTH);
+		
+		JButton cancelButton = (JButton) find(JButton.class,CANCEL_BUTTON_COMPONENT_NAME);
+		
+		getHelper().enterClickAndLeave(new MouseEventData(this,cancelButton));
+		find(JPanel.class,BROWSE_PANEL_COMPONENT_NAME);
+		table = (JTable) find(JTable.class,USER_TABLE_COMPONENT_NAME);
+		assertEquals(NUMBER_OF_ROWS_ADD_CANCEL_TEST,table.getRowCount());
+		
+	}
+	public void testEditUser() {
+	
 	}
 	public void testDeleteUser() {
 		
