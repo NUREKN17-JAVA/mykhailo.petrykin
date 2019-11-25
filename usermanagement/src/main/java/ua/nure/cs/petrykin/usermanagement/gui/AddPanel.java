@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
@@ -19,8 +20,12 @@ import ua.nure.cs.petrykin.usermanagement.db.DatabaseException;
 import ua.nure.cs.petrykin.usermanagement.domain.User;
 import ua.nure.cs.petrykin.usermanagement.util.Messages;
 
-public class AddPanel extends JPanel implements ActionListener {
+public class AddPanel extends JPanel implements ActionListener,Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7627218738823902040L;
 	private MainFrame parent;
 	private JPanel buttonPanel;
 	private JPanel fieldPanel;

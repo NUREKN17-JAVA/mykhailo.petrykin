@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 
@@ -19,8 +20,12 @@ import ua.nure.cs.petrykin.usermanagement.db.DatabaseException;
 import ua.nure.cs.petrykin.usermanagement.domain.User;
 import ua.nure.cs.petrykin.usermanagement.util.Messages;
 
-public class EditPanel extends JPanel implements ActionListener {
+public class EditPanel extends JPanel implements ActionListener,Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5466262224178286566L;
 	private static final String FIRST_NAME_FIELD = "firstNameField";
 	private static final String LAST_NAME_FIELD = "lastNameField";
 	private static final String DATE_OF_BIRTH_FIELD = "dateOfBirthField";

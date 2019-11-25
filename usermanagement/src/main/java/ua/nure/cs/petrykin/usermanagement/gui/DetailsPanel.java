@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 
@@ -19,7 +20,11 @@ import ua.nure.cs.petrykin.usermanagement.db.DatabaseException;
 import ua.nure.cs.petrykin.usermanagement.domain.User;
 import ua.nure.cs.petrykin.usermanagement.util.Messages;
 
-public class DetailsPanel extends JPanel implements ActionListener {
+public class DetailsPanel extends JPanel implements ActionListener,Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9139616674423977835L;
 	private static final String FIRST_NAME_FIELD = "firstNameField";
 	private static final String LAST_NAME_FIELD = "lastNameField";
 	private static final String DATE_OF_BIRTH_FIELD = "dateOfBirthField";
@@ -42,14 +47,14 @@ public class DetailsPanel extends JPanel implements ActionListener {
 	public DetailsPanel(MainFrame parent) {
 		this.parent = parent;
 		initialize();
-	}
+	}//done
 	
 	private void initialize() {
-		this.setName("detailsPanel");
+		this.setName("detailsPanel");//$NON-NLS-1$
 		this.setLayout(new BorderLayout());
 		this.add(getFieldPanel(), BorderLayout.NORTH);
 		this.add(getButtonPanel(), BorderLayout.SOUTH);
-	}
+	}//done
 	
 	
 	private JPanel getButtonPanel() {
@@ -58,18 +63,18 @@ public class DetailsPanel extends JPanel implements ActionListener {
 			buttonPanel.add(closeButton(),null);
 		}
 		return buttonPanel;
-	}
+	}//done
 
 	private JButton closeButton() {
 		if(cancelButton==null) {
 			cancelButton = new JButton();
-			cancelButton.setText(Messages.getString("DetailsPanel.close"));
-			cancelButton.setName("cancelButton");
-			cancelButton.setActionCommand("cancel");
+			cancelButton.setText(Messages.getString("DetailsPanel.close"));//$NON-NLS-1$
+			cancelButton.setName("cancelButton");//$NON-NLS-1$
+			cancelButton.setActionCommand("cancel");//$NON-NLS-1$
 			cancelButton.addActionListener(this);
 		}
 		return cancelButton;
-	}
+	}//done
 
 	private JPanel getFieldPanel() {
 		if(fieldPanel==null) {
@@ -80,14 +85,14 @@ public class DetailsPanel extends JPanel implements ActionListener {
 			addLabeledField(fieldPanel,Messages.getString("AddPanel.date_of_birth"),getDateOfBirthField()); //$NON-NLS-1$
 		}
 		return fieldPanel;
-	}
+	}//done
 
 	private void addLabeledField(JPanel panel, String labelText, JTextField textField) {
 		JLabel label = new JLabel(labelText);
 		label.setLabelFor(textField);
 		panel.add(label);
 		panel.add(textField);
-	}
+	}//done
 
 	private JTextField getDateOfBirthField() {
 		if(dateOfBirthField == null) {
@@ -95,7 +100,7 @@ public class DetailsPanel extends JPanel implements ActionListener {
 			dateOfBirthField.setName(DATE_OF_BIRTH_FIELD); //$NON-NLS-1$
 		}
 		return dateOfBirthField;
-	}
+	}//done
 
 	private JTextField getLastNameField() {
 		if(lastNameField == null) {
@@ -103,7 +108,7 @@ public class DetailsPanel extends JPanel implements ActionListener {
 			lastNameField.setName(LAST_NAME_FIELD); //$NON-NLS-1$
 		}
 		return lastNameField;
-	}
+	}//done
 
 	private JTextField getFirstNameField() {
 		if(firstNameField == null) {
@@ -111,7 +116,7 @@ public class DetailsPanel extends JPanel implements ActionListener {
 			firstNameField.setName(FIRST_NAME_FIELD); //$NON-NLS-1$
 		}
 		return firstNameField;
-	}
+	}//done
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -137,7 +142,7 @@ public class DetailsPanel extends JPanel implements ActionListener {
 		}
 		this.setVisible(false);
 		parent.showBrowsePanel();
-	}
+	}//done
 	
 	private void clearFields() {
 		getFirstNameField().setText("");
@@ -148,5 +153,12 @@ public class DetailsPanel extends JPanel implements ActionListener {
 		
 		getDateOfBirthField().setText("");
 		getDateOfBirthField().setBackground(bgColor);
-	}
+	}//done
+	public void setUser(User user) {
+		this.user=user;
+		getFirstNameField().setText(user.getFirstName());
+		getLastNameField().setText(user.getLastName());
+		DateFormat format = DateFormat.getDateInstance();
+		getDateOfBirthField().setText(format.format(user.getDateOfBirth()));
+	}//done
 }
