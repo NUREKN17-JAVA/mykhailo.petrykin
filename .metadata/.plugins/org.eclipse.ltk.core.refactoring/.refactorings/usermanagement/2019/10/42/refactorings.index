@@ -1,7 +1,0 @@
-1571235321037	Rename type 'UserDao'
-1571235379018	Rename type 'User'
-1571235693785	Rename type 'T'
-1571236168237	Extract constant 'FIRST_NAME'
-1571236180150	Extract constant 'LAST_NAME'
-1571238265726	Extract constant 'INSERT_QUERY'
-1571238709844	Extract constant 'CALL_IDENTITY'
