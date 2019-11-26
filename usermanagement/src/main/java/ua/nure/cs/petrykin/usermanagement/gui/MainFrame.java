@@ -14,6 +14,10 @@ import ua.nure.cs.petrykin.usermanagement.db.Dao;
 
 public class MainFrame extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3538220276603591172L;
 	private static final int FRAME_HEIGHT = 600;
 	private static final int FRAME_WIDTH = 800;
 	private JPanel contentPanel;

@@ -17,13 +17,13 @@ public class User implements Serializable {
 	public User(String firstName, String lastName, Date date) {
 		this.firstName=firstName;
 		this.lastName=lastName;
-		this.dateOfBirth=dateOfBirth;
+		this.dateOfBirth=date;
 	}
 	public User(Long id, String firstName, String lastName, Date date) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.dateOfBirth = dateOfBirth;
+		this.dateOfBirth = date;
 	}
 	public User() {
 	}

@@ -14,6 +14,7 @@ public class MockDaoFactory extends DaoFactory {
 	public Mock getMockUserDao() {
 		return mockUserDao;
 	}
+	@SuppressWarnings("unchecked")
 	@Override
 	public Dao<User> getUserDao() {
 		// TODO Auto-generated method stub

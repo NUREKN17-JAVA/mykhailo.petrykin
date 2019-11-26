@@ -3,7 +3,6 @@ package ua.nure.cs.pertykin.usermanagement.gui;
 import java.awt.Component;
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -14,8 +13,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import com.mockobjects.dynamic.Mock;
-
-import javax.swing.Box.Filler;
 
 import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;

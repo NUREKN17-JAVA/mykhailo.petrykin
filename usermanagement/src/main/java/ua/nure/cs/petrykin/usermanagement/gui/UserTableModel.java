@@ -11,6 +11,10 @@ import ua.nure.cs.petrykin.usermanagement.domain.User;
 import ua.nure.cs.petrykin.usermanagement.util.Messages;
 
 public class UserTableModel extends AbstractTableModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7275718006176609008L;
 	private static final String[] COLUMN_NAMES = {
 			Messages.getString("UserTableModel.id"),
 			Messages.getString("UserTableModel.first_name"),
