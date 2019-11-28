@@ -182,7 +182,7 @@ public class MainFrameTest extends JFCTestCase {
 		find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
 	    User expectedUser = new User(EXPECTED_USER_ID,EXPECTED_USER_FIRST_NAME,EXPECTED_USER_LAST_NAME,new Date());
 	    mockUserDao.expect(MOCK_UPDATE_COMMAND, expectedUser);
-	    List<User> users = new ArrayList<User>(this.users);
+	    ArrayList<User> users = new ArrayList<User>(this.users);
 	    users.add(expectedUser);
 	    
 	    mockUserDao.expectAndReturn(MOCK_FIND_ALL_COMMAND, users);
@@ -204,11 +204,48 @@ public class MainFrameTest extends JFCTestCase {
 	    table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
 	    assertEquals(2, table.getRowCount());
 	}
-	
+	public void testCancelEditUser() {
+		User expectedUser = new User(new Long(1),FIRST_NAME,LAST_NAME,DATE_OF_BIRTH);
+		ArrayList<User> users = new ArrayList<User>(this.users);
+		users.add(expectedUser);
+		
+		mockUserDao.expectAndReturn("findAll",users);
+		
+		JTable table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
+		assertEquals(1,table.getRowCount());
+		
+		JButton editButton = (JButton) find(JTable.class,EDIT_BUTTON_COMPONENT_NAME);
+		getHelper().enterClickAndLeave(new MouseEventData(this, editButton));
+		getHelper().enterClickAndLeave(new JTableMouseEventData(this, table, 0, 0, 1));
+		
+		find(JPanel.class,EDIT_PANEL_COMPONENT_NAME);
+		
+		JTextField firstNameField = (JTextField) find(JTextField.class,FIRST_NAME_FIELD_COMPONENT_NAME);
+		JTextField lastNameField = (JTextField) find(JTextField.class,LAST_NAME_FIELD_COMPONENT_NAME);
+		JTextField dateOfBirthField = (JTextField) find(JTextField.class,DATE_OF_BIRTH_FIELD_COMPONENT_NAME);
+		
+		assertEquals(EXPECTED_USER_FIRST_NAME,firstNameField.getText());
+		assertEquals(EXPECTED_USER_LAST_NAME,lastNameField.getText());
+		
+		getHelper().sendString(new StringEventData(this,firstNameField,FIRST_NAME));
+		getHelper().sendString(new StringEventData(this,lastNameField,LAST_NAME));
+		DateFormat formatter = DateFormat.getDateInstance();
+		String date = formatter.format(DATE_OF_BIRTH);
+		getHelper().sendString(new StringEventData(this, dateOfBirthField, date));
+		
+		JButton cancelButton = (JButton) find(JButton.class, CANCEL_BUTTON_COMPONENT_NAME);
+		getHelper().enterClickAndLeave(new MouseEventData(this,cancelButton));
+		
+		find(JPanel.class,BROWSE_PANEL_COMPONENT_NAME);
+		table = (JTable) find(JTable.class,USER_TABLE_COMPONENT_NAME);
+		assertEquals(2,table.getRowCount());
+		mockUserDao.verify();
+		
+	}
 	public void testDeleteUser() {
 		User expectedUser = new User(EXPECTED_USER_ID,EXPECTED_USER_FIRST_NAME,EXPECTED_USER_LAST_NAME,new Date());
         mockUserDao.expect(MOCK_DELETE_COMMAND, expectedUser);
-        List<User> users = new ArrayList<User>();
+        ArrayList<User> users = new ArrayList<User>();
         mockUserDao.expectAndReturn(MOCK_FIND_ALL_COMMAND, users);
         JTable table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
         assertEquals(1, table.getRowCount());
@@ -219,6 +256,7 @@ public class MainFrameTest extends JFCTestCase {
         table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
         assertEquals(0, table.getRowCount());
 	}
+	
 	private void fillFields(String firstName, String lastName, Date dateOfBirth) {
 		JTextField firtNameField = (JTextField) find(JTextField.class, FIRST_NAME_FIELD_COMPONENT_NAME);
 		JTextField lastNameField = (JTextField) find(JTextField.class, LAST_NAME_FIELD_COMPONENT_NAME);
