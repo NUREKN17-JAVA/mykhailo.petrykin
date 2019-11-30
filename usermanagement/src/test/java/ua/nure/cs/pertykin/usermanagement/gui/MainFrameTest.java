@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -20,6 +22,7 @@ import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.JTableMouseEventData;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.eventdata.StringEventData;
+import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
 import ua.nure.cs.petrykin.usermanagement.db.DaoFactory;
 import ua.nure.cs.petrykin.usermanagement.db.DaoFactoryImpl;
@@ -55,6 +58,7 @@ public class MainFrameTest extends JFCTestCase {
 	private static final String USER_TABLE_COMPONENT_NAME = "userTable";
 	private static final String ADD_PANEL_COMPONENT_NAME = "addPanel";
 	private static final String EDIT_PANEL_COMPONENT_NAME = "editPanel";
+	private static final String DETAILS_PANEL_COMPONENT_NAME = "detailsPanel";
 	
 	private static final String OK_BUTTON_COMPONENT_NAME = "okButton";
 	private static final String DELETE_BUTTON_COMPONENT_NAME = "deleteButton";
@@ -242,6 +246,31 @@ public class MainFrameTest extends JFCTestCase {
 		mockUserDao.verify();
 		
 	}
+	public void testDetailsUser(){
+	    User expectedUser = new User(new Long(1),FIRST_NAME,LAST_NAME,DATE_OF_BIRTH);
+	    ArrayList<User> users = new ArrayList<User>(this.users);
+	    users.add(expectedUser);
+	    
+	    mockUserDao.expectAndReturn("findAll", users);
+	    JTable table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
+	    assertEquals(1, table.getRowCount());
+	    
+	    JButton detailsButton = (JButton)find(JButton.class, DETAILS_BUTTON_COMPONENT_NAME);
+	    getHelper().enterClickAndLeave(new JTableMouseEventData(this, table, 0, 0, 1));
+	    getHelper().enterClickAndLeave(new MouseEventData(this, detailsButton));
+	    
+	    find(JPanel.class, DETAILS_PANEL_COMPONENT_NAME);
+	    find(JTextField.class, FIRST_NAME_FIELD_COMPONENT_NAME);
+	    find(JTextField.class, LAST_NAME_FIELD_COMPONENT_NAME);
+	    find(JTextField.class, DATE_OF_BIRTH_FIELD_COMPONENT_NAME);
+	    
+	    JButton cancelButton = (JButton)find(JButton.class, CANCEL_BUTTON_COMPONENT_NAME);
+	    getHelper().enterClickAndLeave(new MouseEventData(this, cancelButton));
+	    
+	    find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
+	    table = (JTable)find(JTable.class, USER_TABLE_COMPONENT_NAME);
+	    assertEquals(1, table.getRowCount());
+	  }
 	public void testDeleteUser() {
 		User expectedUser = new User(EXPECTED_USER_ID,EXPECTED_USER_FIRST_NAME,EXPECTED_USER_LAST_NAME,new Date());
         mockUserDao.expect(MOCK_DELETE_COMMAND, expectedUser);
@@ -251,10 +280,18 @@ public class MainFrameTest extends JFCTestCase {
         assertEquals(1, table.getRowCount());
         JButton deleteButton = (JButton) find(JButton.class, DELETE_BUTTON_COMPONENT_NAME);
         getHelper().enterClickAndLeave(new JTableMouseEventData(this, table, 0, 0, 1));
+        dialog("Delete user");
         getHelper().enterClickAndLeave(new MouseEventData(this, deleteButton));
         find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
         table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
         assertEquals(0, table.getRowCount());
+	}
+	private void dialog(String title) {
+		DialogFinder dialogFinder = new DialogFinder(title);
+		JDialog dialog = (JDialog) dialogFinder.find();
+        assertNotNull("Could not find the dialog '" + title + "'", dialog);
+        getHelper();
+        TestHelper.disposeWindow(dialog, this);
 	}
 	
 	private void fillFields(String firstName, String lastName, Date dateOfBirth) {

@@ -28,7 +28,7 @@ public class BrowsePanel extends JPanel implements ActionListener,Serializable {
 	private static final String ADD_COMMAND = "add"; //$NON-NLS-1$
 	private static final String EDIT_COMMAND = "edit"; //$NON-NLS-1$
 	private static final String DELETE_COMMAND = "delete"; //$NON-NLS-1$
-	private static final String DETAILS_COMMAND = "delete"; //$NON-NLS-1$
+	private static final String DETAILS_COMMAND = "details"; //$NON-NLS-1$
 	private MainFrame parent;
 	private JScrollPane tablePanel;
 	private JTable userTable;
@@ -96,7 +96,7 @@ public class BrowsePanel extends JPanel implements ActionListener,Serializable {
 			deleteButton = new JButton();
 			deleteButton.setText(Messages.getString("BrowsePanel.delete"));//$NON-NLS-1$
 			deleteButton.setName(DELETE_BUTTON_COMPONENT_NAME);//$NON-NLS-1$
-			deleteButton.setActionCommand(EDIT_COMMAND);//$NON-NLS-1$
+			deleteButton.setActionCommand(DELETE_COMMAND);//$NON-NLS-1$
 			deleteButton.addActionListener(this);
 		}
 		return deleteButton;
@@ -108,7 +108,7 @@ public class BrowsePanel extends JPanel implements ActionListener,Serializable {
 			detailsButton = new JButton();
 			detailsButton.setText(Messages.getString("BrowsePanel.details"));//$NON-NLS-1$
 			detailsButton.setName(DETAILS_BUTTON_COMPONENT_NAME);//$NON-NLS-1$
-			detailsButton.setActionCommand("details");//$NON-NLS-1$
+			detailsButton.setActionCommand(DETAILS_COMMAND);//$NON-NLS-1$
 			detailsButton.addActionListener(this);
 		}
 		return detailsButton;
