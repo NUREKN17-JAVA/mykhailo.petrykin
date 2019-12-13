@@ -31,7 +31,7 @@ public class HsqldbUserDao implements Dao<User> {
 	}
 
 	public HsqldbUserDao(ConnectionFactory connectionFactory) {
-		this.connectionFactory=connectionFactory;
+		this.connectionFactory = connectionFactory;
 	}
 
 	@Override
