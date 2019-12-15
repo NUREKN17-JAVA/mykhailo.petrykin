@@ -15,19 +15,46 @@ public class BrowseServlet extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if (req.getParameter("addButton")!=null) {
+			add(req,resp);
+		} else if (req.getParameter("editButton") != null) {
+			edit(req,resp);
+		} else if(req.getParameter("deleteButton") != null) {
+			delete(req,resp);
+		} else if(req.getParameter("detailsButton") != null) {
+			details(req,resp);
+		} else {
 		browse(req, resp);
+		}
+	}
+
+	private void details(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void delete(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void edit(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void add(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void browse(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException  {
-		// TODO Auto-generated method stub
 		Collection users;
 		try {
 			users = DaoFactory.getInstance().getUserDao().findAll();
 			req.getSession().setAttribute("users", users);
 			req.getRequestDispatcher("/browse.jsp").forward(req,resp);
 		} catch (DatabaseException e) {
-			// TODO Auto-generated catch block
 			throw new ServletException(e);
 		}
 	}
