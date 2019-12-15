@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ua.nure.cs.petrykin.usermanagement.db.DaoFactory;
 import ua.nure.cs.petrykin.usermanagement.db.DatabaseException;
+import ua.nure.cs.petrykin.usermanagement.domain.User;
 
 public class BrowseServlet extends HttpServlet {
 
@@ -39,8 +40,21 @@ public class BrowseServlet extends HttpServlet {
 	}
 
 	private void edit(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+		String idStr = req.getParameter("id");
+		if(idStr==null||idStr.trim().length()==0) {
+			req.setAttribute("error", "You must select a user");
+			req.getRequestDispatcher("/browse.jsp").forward(req, resp);
+			return;
+		}
+		try {
+			User user = DaoFactory.getInstance().getUserDao().find(new Long(idStr));
+			req.getSession().setAttribute("user", user);
+		} catch (Exception e) {
+			req.setAttribute("error", "ERROR:"+e.toString());
+			req.getRequestDispatcher("/browse.jsp").forward(req, resp);
+			return;
+		}
+		req.getRequestDispatcher("/edit").forward(req, resp);
 	}
 
 	private void add(HttpServletRequest req, HttpServletResponse resp)throws ServletException, IOException {
