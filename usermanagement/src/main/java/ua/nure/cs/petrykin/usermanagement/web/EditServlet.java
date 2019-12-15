@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.ValidationException;
 
 import ua.nure.cs.petrykin.usermanagement.db.DaoFactory;
 import ua.nure.cs.petrykin.usermanagement.db.DatabaseException;
@@ -22,22 +23,29 @@ public class EditServlet extends HttpServlet {
 		} else if(req.getParameter("cancelButton")!=null) {
 			doCancel(req,resp);
 		} else {
-			showPage();
+			showPage(req,resp);
 		}
 	}
 
-	private void showPage() {
-		// TODO Auto-generated method stub
+	private void showPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("/edit.jsp").forward(req, resp);
 		
 	}
 
-	private void doCancel(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
+	private void doCancel(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("/browse.jsp").forward(req, resp);
 		
 	}
 
 	private void doOk(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		User user = getUser(req);
+		User user = null;
+		try {
+			user = getUser(req);
+		} catch (ValidationException e1) {
+			req.setAttribute("error",e1.getMessage());
+			showPage(req,resp);
+			return;
+		}
 		try {
 			processUser(user);
 		} catch (DatabaseException e) {
@@ -51,12 +59,23 @@ public class EditServlet extends HttpServlet {
 		DaoFactory.getInstance().getUserDao().update(user);
 		}
 	
-	private User getUser(HttpServletRequest req) {
+	private User getUser(HttpServletRequest req) throws ValidationException {
 		User user = new User();
 		String idStr = req.getParameter("id");
 		String firstName = req.getParameter("firstName");
 		String lastName = req.getParameter("lastName");
 		String dateStr = req.getParameter("date");
+		
+		if (firstName == null) {
+			throw new ValidationException("First name is empty");
+		}
+		if (lastName == null) {
+			throw new ValidationException("Last name is empty");
+		}
+		if (dateStr == null) {
+			throw new ValidationException("Date is empty");
+		}
+		
 		if(idStr != null) {
 			user.setId(new Long(idStr));
 		}
@@ -65,7 +84,7 @@ public class EditServlet extends HttpServlet {
 		try {
 			user.setDateOfBirth(DateFormat.getDateInstance().parse(dateStr));
 		} catch (ParseException e) {
-			throw new RuntimeException(e);
+			throw new ValidationException("Date format is incorrect");
 		}
 		return user;
 	}
