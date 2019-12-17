@@ -45,5 +45,6 @@ public class MockUserDao implements Dao<User> {
 	public Collection<User> find(String firstName, String lastName) throws DatabaseException {
         throw new UnsupportedOperationException();
     }
+
 	
 }
