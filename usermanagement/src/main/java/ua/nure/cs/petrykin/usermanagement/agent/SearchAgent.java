@@ -33,7 +33,7 @@ public class SearchAgent extends Agent {
 			throw new SearchException(e);
 		}
 	}
-	private void showUsers(Collection user) {
+	public void showUsers(Collection user) {
 		
 	}
 }
