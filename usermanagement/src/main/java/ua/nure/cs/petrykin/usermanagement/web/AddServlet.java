@@ -24,7 +24,4 @@ public class AddServlet extends EditServlet {
 	protected void showPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getRequestDispatcher("/add.jsp").forward(req,resp);
 	}
-
-
-
 }
